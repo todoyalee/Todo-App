@@ -27,3 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/todos/index', [App\Http\Controllers\TodoController::class, 'index'])->name('index');
+
+
+
+Route::get('/todos/create', [App\Http\Controllers\TodoController::class, 'create'])->name('create');
