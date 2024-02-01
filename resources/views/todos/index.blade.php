@@ -13,58 +13,57 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    
-                @if(Session::has('alert-success'))
+
+                    @if(Session::has('alert-success'))
                         <div class="alert alert-success" role="alert">
                             {{ Session::get('alert-success') }}
                         </div>
                     @endif
 
-                    @if(count($todos)>0)
+                    @if(count($todos) > 0)
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Compelted</th>
-                        <th>Action</th>
-</tr>
-</thead>
-   
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Compelted</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                @foreach ($todos as $todo)
+                                    <tr>
+                                        <td>{{ $todo->title }}</td>
+                                        <td>{{ $todo->description }}</td>
 
-<tbody>
-@foreach ($todos as $todo)
-<tr>
-<td> {{ $todo->title}} </td>
+                                        <td>
+                                            @if($todo->is_completed == 1)
+                                                <a class="btn btn-sm btn-success" href="#">Completed</a>
+                                            @else
+                                                <a class="btn btn-sm btn-danger" href="#">Incompleted</a>
+                                            @endif
+                                        </td>
 
-<td> {{ $todo->description}} </td>
+                                        <td>
+                                        <a href="" class=" inner btn btn-sm btn-success">view</a>
+                                        <a href="" class=" inner btn btn-sm btn-info">Edit</a> 
+                                        
 
-<td> {{ $todo->is_completed ==1 ? '<a href="" class="btn-sm btn-info"> Completed </a>' :'<a href="" class="btn-sm btn-info"> inCompleted </a>'}} </td>
+                                            <form action="">
+                                                <input type="hidden" name="todo_id" value="{{ $todo->id }}">
+                                                <input type="submit" class="btn btn-sm btn-info">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
 
-<td>
-
-<a href="">Edit</a>
-<a href="">View</a>
-
-<form action="">
-    <input type="hidden" name="todo_id" value="{{$todo->id }}">
-    <input type="submit" class="btn btn-sm btn-info" >
-</form>
-</td>
-
-</tr>
-@endforeach 
-</tbody>
-</table>
-
-
-@else 
-<h4>no todos are created yet</h4>
-@endif
-
-
+                    @else
+                        <h4>No todos are created yet</h4>
+                    @endif
 
                 </div>
 
