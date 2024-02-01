@@ -8,7 +8,9 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                <form>
+                <form  method="post" action="{{ route('store') }} ">
+
+                @csrf
   <div class="mb-3">
     <label  class="form-label">Title</label>
     <input type="text" class="form-control" name="title">

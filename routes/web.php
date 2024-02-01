@@ -31,3 +31,7 @@ Route::get('/todos/index', [App\Http\Controllers\TodoController::class, 'index']
 
 
 Route::get('/todos/create', [App\Http\Controllers\TodoController::class, 'create'])->name('create');
+
+
+
+Route::post('/todos/store', [App\Http\Controllers\TodoController::class, 'store'])->name('store');
