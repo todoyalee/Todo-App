@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
-                    <h4>Edit Page  </h4>
+                    <h4>Edit Page  </h4>    
                 <form>
   <div class="mb-3">
     <label  class="form-label">Title</label>

@@ -6,10 +6,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\TodoRequest;
 
+use App\Models\Todo ;
+
 class TodoController extends Controller
 {
     public function index(){
-        return view('todos.index');
+
+        $todos=Todo::all();
+        //chenge this later
+        return view('todos.index',[
+            'todos'=>$todos
+        ]);
     }
 
 
@@ -20,7 +27,24 @@ class TodoController extends Controller
 
     public function store(TodoRequest $request){
 
-        return $request->all();
+        //Todo::create($request->all());
+
+        //$request->validated();
+
+       Todo::create([   
+            'title'=> $request->title,
+        'description'=> $request->description,
+           'is_completed'=>0,
+           
+
+        ]);
+
+
+        $request->session()->flash('alert-success' ,'Todo Created Successfully');
+
+        return redirect(url('/todos/index'));
+
+
         
     }
 }
