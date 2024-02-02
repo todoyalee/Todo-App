@@ -9,15 +9,20 @@
 
                 <div class="card-body">
                     <h4>Edit Page  </h4>    
-                <form>
+                <form method="post" action="{{ route('update') }}">
+                  @csrf
+                  @method('PUT')
+                  <!--bedcause we're updating and not storing anything-->
+
+                <input type="hidden" name="todo_id" value="{{$todo->id}}">
   <div class="mb-3">
     <label  class="form-label">Title</label>
-    <input type="text" class="form-control" name="title">
+    <input type="text" class="form-control" name="title" value="{{ $todo->title}}">
     
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Description</label>
-    <input name="description" class="form-control">
+    <input name="description" class="form-control" value="{{$todo->description}}">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

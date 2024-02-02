@@ -20,6 +20,14 @@
                         </div>
                     @endif
 
+
+
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ Session::get('error') }}
+                        </div>
+                    @endif
+
                     @if(count($todos) > 0)
 
                         <table class="table">
@@ -44,16 +52,16 @@
                                             @else
                                                 <a class="btn btn-sm btn-danger" href="#">Incompleted</a>
                                             @endif
-                                        </td>
+                                        </td>   
 
                                         <td>
-                                        <a href="" class=" inner btn btn-sm btn-success">view</a>
-                                        <a href="" class=" inner btn btn-sm btn-info">Edit</a> 
+                                        <a href="{{route('show'  , $todo->id ) }} " class=" inner btn btn-sm btn-success">view</a>
+                                        <a href="{{route('edit'  , $todo->id ) }} " class=" inner btn btn-sm btn-info">Edit</a> 
                                         
 
                                             <form action="">
                                                 <input type="hidden" name="todo_id" value="{{ $todo->id }}">
-                                                <input type="submit" class="btn btn-sm btn-info">
+                                                <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                                             </form>
                                         </td>
                                     </tr>

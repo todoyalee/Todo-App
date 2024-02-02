@@ -35,3 +35,14 @@ Route::get('/todos/create', [App\Http\Controllers\TodoController::class, 'create
 
 
 Route::post('/todos/store', [App\Http\Controllers\TodoController::class, 'store'])->name('store');
+
+
+Route::get('/todos/show/{id}', [App\Http\Controllers\TodoController::class, 'show'])->name('show');
+
+
+Route::get('todos/{id}/edit',[App\Http\Controllers\TodoController::class,'edit'])->name('edit');
+
+
+
+
+Route::put('/todos/update', [App\Http\Controllers\TodoController::class, 'update'])->name('update');
