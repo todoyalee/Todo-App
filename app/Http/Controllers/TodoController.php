@@ -103,4 +103,26 @@ class TodoController extends Controller
 
 
     }
+
+    public function destroy(Request $request){
+
+        $todo = Todo::find($request->todo_id);
+
+        if(! $todo){
+
+            request()->session()->flash('error' ,'unable to locate the todo');
+            return redirect(url('/todos/index'))->withErrors([
+                'error'=>'unable to locate the todo',
+            ]);
+        }
+
+
+        $todo->delete();
+
+        $request->session()->flash('alert-success','To do Deleted Successfully');
+        return redirect(url('/todos/index'));
+
+
+
+    }
 }

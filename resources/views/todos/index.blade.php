@@ -29,11 +29,13 @@
 
 
                     @if(Session::has('error'))
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-danger" r   ole="alert">
                             {{ Session::get('error') }}
                         </div>
                     @endif
 
+
+                    <a class="btn btn-sm btn-info"href="{{ route('create')}}">Create Todo</a>
                     @if(count($todos) > 0)
 
                         <table class="table">
@@ -65,7 +67,10 @@
                                         <a href="{{route('edit'  , $todo->id ) }} " class=" inner btn btn-sm btn-info">Edit</a> 
                                         
 
-                                            <form action="">
+                                            <form  method="post"action="{{route('destroy')}}">
+
+                                            @csrf
+                                            @method('DELETE')
                                                 <input type="hidden" name="todo_id" value="{{ $todo->id }}">
                                                 <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                                             </form>
