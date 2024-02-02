@@ -24,6 +24,17 @@
     <label for="exampleInputPassword1" class="form-label">Description</label>
     <input name="description" class="form-control" value="{{$todo->description}}">
   </div>
+
+  <div class="mb-3">
+<label for="">status</label>
+<select name="is_completed" class="form-control">
+<option disabled selected>Select option </option>
+<option value="1">Completed</option>
+<option value="0">In Completed</option>
+
+</select>
+
+</div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 

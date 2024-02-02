@@ -20,6 +20,12 @@
                         </div>
                     @endif
 
+                    @if(Session::has('alert-info'))
+                        <div class="alert alert-info" role="alert">
+                            {{ Session::get('alert-info') }}
+                        </div>
+                    @endif
+
 
 
                     @if(Session::has('error'))
