@@ -11,18 +11,27 @@ use App\Models\Todo ;
 class TodoController extends Controller
 {
     public function index(){
-
+try {
         $todos=Todo::all();
         //chenge this later
         return view('todos.index',[
             'todos'=>$todos
         ]);
     }
-
-
-    public function create(){
-        return view('todos.create');
+    catch(Exception $e){
+    Log::critical($e->getMessage());
+ }
     }
+
+
+        public function create()  {
+        try{
+            return view('todos.create');
+        }
+        catch(Exception $e){
+            Log::critical($e->getMessage());
+         }
+        }
 
 
     public function store(TodoRequest $request){
@@ -30,6 +39,7 @@ class TodoController extends Controller
         //Todo::create($request->all());
 
         //$request->validated();
+        try{
 
        Todo::create([   
             'title'=> $request->title,
@@ -37,12 +47,16 @@ class TodoController extends Controller
            'is_completed'=>0,
            
 
-        ]);
+        ]); 
 
 
         $request->session()->flash('alert-success' ,'Todo Created Successfully');
 
         return redirect(url('/todos/index'));
+    }
+    catch(Exception $e){
+        Log::critical($e->getMessage());
+     }
 
 
         
@@ -50,6 +64,8 @@ class TodoController extends Controller
 
 
     public function show($id){
+
+        try{
 
         $todo=Todo::find($id);
 
@@ -64,9 +80,16 @@ class TodoController extends Controller
         
         return view('todos.show',['todo' =>$todo]);
     }
+    catch(Exception $e){
+        Log::critical($e->getMessage());
+ }
+    }
 
 
     public function edit($id){
+
+
+        try{
         $todo=Todo::find($id);
         if(! $todo){
 
@@ -77,9 +100,14 @@ class TodoController extends Controller
         }
         
         return view('todos.edit',['todo' =>$todo]);
+     } catch(Exception $e){
+            Log::critical($e->getMessage());
+     }
     }
 
     public function update(TodoRequest $request){
+
+        try{
 
         $todo = Todo::find($request->todo_id);
 
@@ -100,11 +128,16 @@ class TodoController extends Controller
 
 
         return redirect(url('/todos/index'));
+    }catch(Exception $e){
+            Log::critical($e->getMessage());
+     }
 
 
     }
 
     public function destroy(Request $request){
+
+        try{
 
         $todo = Todo::find($request->todo_id);
 
@@ -121,6 +154,10 @@ class TodoController extends Controller
 
         $request->session()->flash('alert-success','To do Deleted Successfully');
         return redirect(url('/todos/index'));
+
+       }   catch(Exception $e){
+            Log::critical($e->getMessage());
+     }
 
 
 

@@ -31,7 +31,7 @@
                     @if(Session::has('error'))
                         <div class="alert alert-danger" r   ole="alert">
                             {{ Session::get('error') }}
-                        </div>
+                        </div>w
                     @endif
 
 
