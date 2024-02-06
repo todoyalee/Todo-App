@@ -1,30 +1,25 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests\TodoRequest;
-
 use App\Models\Todo ;
 
 class TodoController extends Controller
 {
     public function index(){
-try {
+      try {
         $todos=Todo::all();
-        //chenge this later
+        //change this later
         return view('todos.index',[
             'todos'=>$todos
         ]);
-    }
-    catch(Exception $e){
+       }catch(Exception $e){
     Log::critical($e->getMessage());
- }
+       }
     }
 
 
-        public function create()  {
+    public function create()  {
         try{
             return view('todos.create');
         }
@@ -35,49 +30,25 @@ try {
 
 
     public function store(TodoRequest $request){
-
         //Todo::create($request->all());
-
         //$request->validated();
         try{
-
        Todo::create([   
             'title'=> $request->title,
         'description'=> $request->description,
            'is_completed'=>0,
-           
-
         ]); 
-
-
         $request->session()->flash('alert-success' ,'Todo Created Successfully');
-
         return redirect(url('/todos/index'));
-    }
-    catch(Exception $e){
+        }catch(Exception $e){
         Log::critical($e->getMessage());
-     }
-
-
-        
+     }  
     }
 
 
     public function show($id){
-
         try{
-
-        $todo=Todo::find($id);
-
-
-        if(! $todo){
-
-            request()->session()->flash('error' ,'unable to locate the todo');
-            return redirect(url('/todos/index'))->withErrors([
-                'error'=>'unable to locate the todo',
-            ]);
-        }
-        
+        $todo=Todo::findorFail($id);
         return view('todos.show',['todo' =>$todo]);
     }
     catch(Exception $e){
@@ -87,48 +58,25 @@ try {
 
 
     public function edit($id){
-
-
         try{
-        $todo=Todo::find($id);
-        if(! $todo){
-
-            request()->session()->flash('error' ,'unable to locate the todo');
-            return redirect(url('/todos/index'))->withErrors([
-                'error'=>'unable to locate the todo',
-            ]);
-        }
-        
+        $todo=Todo::findorFail($id);
         return view('todos.edit',['todo' =>$todo]);
-     } catch(Exception $e){
+       }catch(Exception $e){
             Log::critical($e->getMessage());
      }
     }
 
     public function update(TodoRequest $request){
-
         try{
-
-        $todo = Todo::find($request->todo_id);
-
-
-        if(! $todo){
-
-            request()->session()->flash('error' ,'unable to locate the todo');
-            return redirect(url('/todos/index'))->withErrors([
-                'error'=>'unable to locate the todo',
-            ]);
-        }
+        $todo = Todo::findorFail($request->todo_id);
         $todo->update([
             'title' =>$request->title,
             'description' =>$request->description,
             'is_completed' =>$request->is_completed,
         ]);
         $request->session()->flash('alert-info' ,'Todo updated Successfully');
-
-
         return redirect(url('/todos/index'));
-    }catch(Exception $e){
+         }catch(Exception $e){
             Log::critical($e->getMessage());
      }
 
@@ -136,30 +84,23 @@ try {
     }
 
     public function destroy(Request $request){
-
         try{
+        $todo = Todo::findorFail($request->todo_id);
+        $todo->delete();
+        $request->session()->flash('alert-success','To do Deleted Successfully');
+        return redirect(url('/todos/index'));
+        }catch(Exception $e){
+            Log::critical($e->getMessage());
+     }
+    }
 
-        $todo = Todo::find($request->todo_id);
+    /*
 
-        if(! $todo){
-
+     if(! $todo){
             request()->session()->flash('error' ,'unable to locate the todo');
             return redirect(url('/todos/index'))->withErrors([
                 'error'=>'unable to locate the todo',
             ]);
-        }
-
-
-        $todo->delete();
-
-        $request->session()->flash('alert-success','To do Deleted Successfully');
-        return redirect(url('/todos/index'));
-
-       }   catch(Exception $e){
-            Log::critical($e->getMessage());
-     }
-
-
-
-    }
+            }
+            */
 }
